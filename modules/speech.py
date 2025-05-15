@@ -33,7 +33,7 @@ def listen_for_yes_no():
     microphone = sr.Microphone()
 
     with microphone as source:
-        print("Please say 'yes' or 'no'...")
+        print("Please say 'yes, I confirm' or 'no, cancel'")
         recognizer.adjust_for_ambient_noise(source)  # optional, reduces noise
         audio = recognizer.listen(source, phrase_time_limit=15)
 

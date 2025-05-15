@@ -10,6 +10,21 @@ llm_configs = configs.load_llm_config()
 command_docs = configs.load_command_docs()
 command_list = configs.load_command_list()
 
+def confirm_action():
+    """
+    Asks the user to confirm an action with a yes or no response.
+    """
+    speech.say("Please confirm verbally.")
+    response = speech.listen_for_yes_no()
+    
+    if response == "yes":
+        return True
+    elif response == "no":
+        return False
+    else:
+        print("Invalid response. Please say 'yes' or 'no'.")
+        return confirm_action()
+
 if __name__ == "__main__":
     # Initialize the drone connection
     drone_connection = drone.Drone(connection_string=drone_configs["connection_string"])
@@ -62,12 +77,25 @@ if __name__ == "__main__":
                             print("Takeoff command requires one parameter: altitude.")
                             continue
                         altitude = float(parameters[0])
+                        
+                        if drone_configs["confirm"]["takeoff"]:
+                            speech.say(f"Are you sure you want to take off to {altitude} meters?")
+                            if not confirm_action():
+                                print("Takeoff cancelled.")
+                                continue
+                        
                         speech.say(f"Arming drone")
                         drone_connection.arm()
                         speech.say(f"Taking off to {altitude} meters")
                         drone_connection.takeoff(altitude)
 
                     elif command == "LAND":
+                        if drone_configs["confirm"]["land"]:
+                            speech.say("Are you sure you want to land?")
+                            if not confirm_action():
+                                print("Landing cancelled.")
+                                continue
+                        
                         speech.say("Landing drone in place")
                         drone_connection.land()
 
@@ -76,6 +104,12 @@ if __name__ == "__main__":
                             print("Travel Relative requires three parameters: x, y, z.")
                             continue
                         x, y, z = map(float, parameters)
+                        
+                        if drone_configs["confirm"]["travel_relative"]:
+                            speech.say(f"Are you sure you want to travel relative by ({x}, {y}, {z})?")
+                            if not confirm_action():
+                                print("Travel relative cancelled.")
+                                continue
                         
                         speech.say(f"Traveling relative using vector ({x}, {y}, {z})")
                         drone_connection.travel_relative(x, y, z)
@@ -86,6 +120,12 @@ if __name__ == "__main__":
                             continue
                         lat, lon, alt = map(float, parameters)
                         
+                        if drone_configs["confirm"]["travel_absolute"]:
+                            speech.say(f"Are you sure you want to travel absolute to ({lat}, {lon}, {alt})?")
+                            if not confirm_action():
+                                print("Travel absolute cancelled.")
+                                continue
+                        
                         speech.say(f"Traveling to absolute coordinates ({lat}, {lon}, {alt})")
                         drone_connection.travel_absolute(lat, lon, alt)
                         
@@ -94,6 +134,12 @@ if __name__ == "__main__":
                             print("Yaw Relative requires one parameter: angle.")
                             continue
                         angle = float(parameters[0])
+                        
+                        if drone_configs["confirm"]["yaw_relative"]:
+                            speech.say(f"Are you sure you want to yaw relative by {angle} degrees?")
+                            if not confirm_action():
+                                print("Yaw relative cancelled.")
+                                continue
                         
                         speech.say(f"Yawing relative by {angle} degrees")
                         drone_connection.yaw_relative(angle)
@@ -104,10 +150,22 @@ if __name__ == "__main__":
                             continue
                         angle = float(parameters[0])
                         
+                        if drone_configs["confirm"]["yaw_absolute"]:
+                            speech.say(f"Are you sure you want to yaw absolute to {angle} degrees?")
+                            if not confirm_action():
+                                print("Yaw absolute cancelled.")
+                                continue
+                        
                         speech.say(f"Yawing absolute to {angle} degrees")
                         drone_connection.yaw_absolute(angle)
 
                     elif command == "RTL":
+                        if drone_configs["confirm"]["rtl"]:
+                            speech.say("Are you sure you want to return to launch?")
+                            if not confirm_action():
+                                print("Return to launch cancelled.")
+                                continue
+                        
                         speech.say("Returning to Launch")
                         drone_connection.rtl()
 
