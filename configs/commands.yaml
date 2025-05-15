@@ -1,0 +1,53 @@
+commands:
+  - title: "Takeoff"
+    snippet: |
+      Command: Takeoff
+      Description: Lifts the drone vertically to a specified altitude.
+      Format: Takeoff,<altitude>
+      Example: Takeoff to 10 meters -> Takeoff,10
+
+  - title: "Land"
+    snippet: |
+      Command: Land
+      Description: Lands the drone immediately.
+      Format: Land
+      Example: Initiate landing -> Land
+
+  - title: "Travel Relative"
+    snippet: |
+      Command: Travel Relative
+      Description: Moves the drone relative to its current position.
+      Parameters: x (forward), y (right), z (up) — all floats.
+      Format: Travel Relative,<x>,<y>,<z>
+      Example: 3 meters forwards, 10 meters left and 5 meters up -> Travel Relative,3,-10,5
+
+  - title: "Yaw Relative"
+    snippet: |
+      Command: Yaw Relative
+      Description: Rotates the drone by a specified angle relative to its current heading.
+      Parameters: angle (degrees clockwise, negative for counter-clockwise)
+      Format: Yaw Relative,<angle>
+      Example: Rotate by 90 degrees clockwise -> Yaw Relative,90
+
+  - title: "Yaw Absolute"
+    snippet: |
+      Command: Yaw Absolute
+      Description: Rotates the drone to a specified absolute heading.
+      Parameters: angle (degrees)
+      Format: Yaw Absolute,<angle>
+      Example: Rotate to 180 degrees -> Yaw Absolute,180
+
+  - title: "Travel Absolute"
+    snippet: |
+      Command: Travel Absolute
+      Description: Moves the drone to a specified GPS location.
+      Parameters: latitude, longitude, altitude (optional, default 0)
+      Format: Travel Absolute,<lat>,<lon>,<alt>
+      Example: fly to 43.123, -79.202 at 50 meters altitude -> Travel Absolute,43.123,-79.202,50
+
+  - title: "RTL"
+    snippet: |
+      Command: RTL
+      Description: Returns the drone to the launch point.
+      Format: RTL
+      Example: Return to launch -> RTL

@@ -1,0 +1,12 @@
+llm:
+  api_key: "YOUR-API-KEY-HERE"
+  model: "command-a-03-2025"
+  temperature: 0.2
+  max_tokens: 128
+  prompt_base: |
+    You are a command parser for a drone. Using your knowledge and the documents provided, extract the most appropriate command from user input and return it in this format:
+
+    <Command>[,<param1>[,<param2>[,<param3>]]]
+
+    If no command can be matched, respond with:
+    None of the above

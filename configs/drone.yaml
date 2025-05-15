@@ -1,0 +1,2 @@
+drone:
+  connection_string: "tcp:127.0.0.1:14550"
