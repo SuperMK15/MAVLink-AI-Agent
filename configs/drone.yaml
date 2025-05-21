@@ -1,0 +1,10 @@
+drone:
+  connection_string: "tcp:127.0.0.1:14550"
+  confirm:
+    takeoff: true
+    land: false
+    rtl: false
+    travel_relative: false
+    travel_absolute: false
+    yaw_relative: false
+    yaw_absolute: false
